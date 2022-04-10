@@ -9,10 +9,16 @@ class Product {
     const jsonObject = JSON.parse(jsonString);
     const obj = {};
     jsonObject.attributes.forEach((attr) => {
-      obj[attr.name] = attr.values
-        .filter((value) => value.active)
-        .map((value) => value.name);
+      if (attr.values.length)
+        obj[attr.name] = attr.values
+          .filter((value) => value.active)
+          .map((value) => value.name);
     });
+
+    // console.log(obj);
+    for (let key in obj) {
+      if (!obj[key].length) delete obj[key];
+    }
 
     // let result = Object.values(obj).reduce((mergedArray, currArray) => {
     //   console.log(mergedArray, currArray);
