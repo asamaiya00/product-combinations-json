@@ -1,4 +1,4 @@
-class Product {
+export default class Product {
   getPossibleCombinations() {
     const jsonString = document.getElementById('json').value;
     const outputEl = document.getElementById('output');
@@ -25,19 +25,7 @@ class Product {
 
       const valuesArray = Object.values(obj);
 
-      const productArray = valuesArray.reduce(
-        (arrayOfArray, currArray) => {
-          // console.log(arrayOfArray, currArray);
-          return arrayOfArray
-            .map((arrayTillNow) =>
-              currArray.map((newElement) => arrayTillNow.concat(newElement))
-            )
-            .flat();
-        },
-        [[]]
-      );
-
-      // console.log(productArray);
+      const productArray = this.getCrossProduct(valuesArray);
 
       outputEl.innerHTML += `<p> Total ${productArray.length} ${jsonObject.name}</p>`;
 
@@ -56,15 +44,33 @@ class Product {
       return;
     }
   }
+
+  getCrossProduct(valuesArray) {
+    const productArray = valuesArray.reduce(
+      (arrayOfArray, currArray) => {
+        // console.log(arrayOfArray, currArray);
+        return arrayOfArray
+          .map((arrayTillNow) =>
+            currArray.map((newElement) => arrayTillNow.concat(newElement))
+          )
+          .flat();
+      },
+      [[]]
+    );
+    if (!productArray[0].length) {
+      return [];
+    }
+    return productArray;
+  }
 }
 
 const product = new Product();
+document.addEventListener('DOMContentLoaded', function () {
+  document
+    .getElementById('btn')
+    .addEventListener('click', () => product.getPossibleCombinations());
 
-document
-  .getElementById('btn')
-  .addEventListener('click', () => product.getPossibleCombinations());
-
-document.getElementById('json').value = `{
+  document.getElementById('json').value = `{
     "name": "Tshirt",
     "attributes": [
         {
@@ -103,3 +109,4 @@ document.getElementById('json').value = `{
         }
     ]
 }`;
+});
