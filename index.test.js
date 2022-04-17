@@ -22,3 +22,12 @@ test('get cross product', () => {
     [3, 6],
   ]);
 });
+
+test('get cross product logic', () => {
+  const product = new Product();
+  const productArray = product.getCrossProductLogic([[1, 2], [7], [4]]);
+  expect(productArray).toStrictEqual([
+    [1, 7, 4],
+    [2, 7, 4],
+  ]);
+});

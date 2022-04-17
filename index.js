@@ -25,7 +25,8 @@ export default class Product {
 
       const valuesArray = Object.values(obj);
 
-      const productArray = this.getCrossProduct(valuesArray);
+      // const productArray = this.getCrossProduct(valuesArray);
+      const productArray = this.getCrossProductLogic(valuesArray);
 
       outputEl.innerHTML += `<p> Total ${productArray.length} ${jsonObject.name}</p>`;
 
@@ -61,6 +62,24 @@ export default class Product {
       return [];
     }
     return productArray;
+  }
+
+  getCrossProductLogic(valuesArray) {
+    let arrayOfArray = [[]];
+    for (let i in valuesArray) {
+      let arrayTillNow = [];
+      for (let j in arrayOfArray) {
+        for (let k in valuesArray[i]) {
+          // console.log(valuesArray[i][k]);
+          arrayTillNow.push(arrayOfArray[j].concat(valuesArray[i][k]));
+        }
+      }
+      arrayOfArray = arrayTillNow;
+    }
+    if (!arrayOfArray[0].length) {
+      return [];
+    }
+    return arrayOfArray;
   }
 }
 
